@@ -15158,7 +15158,14 @@ var _user$project$Views_Leaders_List$maybeList = function (response) {
 		case 'Loading':
 			return _elm_lang$html$Html$text('Loading...');
 		case 'Success':
-			return _user$project$Views_Leaders_List$list(_p0._0);
+			return _user$project$Views_Leaders_List$list(
+				_elm_lang$core$List$reverse(
+					A2(
+						_elm_lang$core$List$sortBy,
+						function (_) {
+							return _.attendance;
+						},
+						_p0._0)));
 		default:
 			return _elm_lang$html$Html$text(
 				_elm_lang$core$Basics$toString(_p0._0));
