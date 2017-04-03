@@ -14876,6 +14876,16 @@ var _user$project$Msgs$OnFetchLeaders = function (a) {
 	return {ctor: 'OnFetchLeaders', _0: a};
 };
 
+var _user$project$Commands$attendanceDecoder = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(_elm_lang$core$Json_Decode$index, 8, _elm_lang$core$Json_Decode$float),
+		_1: {
+			ctor: '::',
+			_0: _elm_lang$core$Json_Decode$succeed(0),
+			_1: {ctor: '[]'}
+		}
+	});
 var _user$project$Commands$leaderDecoder = function () {
 	var sessionsAttendedDecoder = A2(
 		_elm_lang$core$Json_Decode$andThen,
@@ -14885,7 +14895,7 @@ var _user$project$Commands$leaderDecoder = function () {
 				function (attended) {
 					return (attended / total) * 100;
 				},
-				A2(_elm_lang$core$Json_Decode$index, 8, _elm_lang$core$Json_Decode$float));
+				_user$project$Commands$attendanceDecoder);
 		},
 		A2(_elm_lang$core$Json_Decode$index, 7, _elm_lang$core$Json_Decode$float));
 	return A4(
