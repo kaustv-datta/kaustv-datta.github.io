@@ -15707,15 +15707,19 @@ var _krisajenkins$remotedata$RemoteData$update = F2(
 	});
 
 var _user$project$Models$initialModel = function (route) {
-	return {lsLeaders: _krisajenkins$remotedata$RemoteData$Loading, rsLeaders: _krisajenkins$remotedata$RemoteData$Loading, route: route};
+	return {lsLeaders: _krisajenkins$remotedata$RemoteData$Loading, rsLeaders: _krisajenkins$remotedata$RemoteData$Loading, rivers: _krisajenkins$remotedata$RemoteData$Loading, route: route};
 };
-var _user$project$Models$Model = F3(
-	function (a, b, c) {
-		return {lsLeaders: a, rsLeaders: b, route: c};
+var _user$project$Models$Model = F4(
+	function (a, b, c, d) {
+		return {lsLeaders: a, rsLeaders: b, rivers: c, route: d};
 	});
 var _user$project$Models$Leader = F3(
 	function (a, b, c) {
 		return {attendance: a, name: b, state: c};
+	});
+var _user$project$Models$River = F6(
+	function (a, b, c, d, e, f) {
+		return {state: a, location: b, maxTemp: c, minTemp: d, maxPH: e, minPH: f};
 	});
 var _user$project$Models$NotFoundRoute = {ctor: 'NotFoundRoute'};
 var _user$project$Models$RiversRoute = {ctor: 'RiversRoute'};
@@ -15726,6 +15730,9 @@ var _user$project$Models$LeadersRoute = {ctor: 'LeadersRoute'};
 var _user$project$Msgs$OnLocationChange = function (a) {
 	return {ctor: 'OnLocationChange', _0: a};
 };
+var _user$project$Msgs$OnFetchRivers = function (a) {
+	return {ctor: 'OnFetchRivers', _0: a};
+};
 var _user$project$Msgs$OnFetchRSLeaders = function (a) {
 	return {ctor: 'OnFetchRSLeaders', _0: a};
 };
@@ -15733,7 +15740,42 @@ var _user$project$Msgs$OnFetchLSLeaders = function (a) {
 	return {ctor: 'OnFetchLSLeaders', _0: a};
 };
 
-var _user$project$Commands$attendanceDecoder = _elm_lang$core$Json_Decode$oneOf(
+var _user$project$Commands$riverDecoder = A3(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+	'PH6585Min',
+	_elm_lang$core$Json_Decode$string,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'PH6585Max',
+		_elm_lang$core$Json_Decode$string,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'TEMPERATUREInDegreeCentigradeMin',
+			_elm_lang$core$Json_Decode$string,
+			A3(
+				_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+				'TEMPERATUREInDegreeCentigradeMax',
+				_elm_lang$core$Json_Decode$string,
+				A3(
+					_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+					'LOCATIONS',
+					_elm_lang$core$Json_Decode$string,
+					A3(
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+						'STATE',
+						_elm_lang$core$Json_Decode$string,
+						_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Models$River)))))));
+var _user$project$Commands$rsAttendanceDecoder = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: A2(_elm_lang$core$Json_Decode$index, 8, _elm_lang$core$Json_Decode$string),
+		_1: {
+			ctor: '::',
+			_0: _elm_lang$core$Json_Decode$succeed('0'),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Commands$lsAttendanceDecoder = _elm_lang$core$Json_Decode$oneOf(
 	{
 		ctor: '::',
 		_0: A2(_elm_lang$core$Json_Decode$index, 8, _elm_lang$core$Json_Decode$float),
@@ -15743,7 +15785,32 @@ var _user$project$Commands$attendanceDecoder = _elm_lang$core$Json_Decode$oneOf(
 			_1: {ctor: '[]'}
 		}
 	});
-var _user$project$Commands$leaderDecoder = function () {
+var _user$project$Commands$rsLeaderDecoder = function () {
+	var sessionsAttendedDecoder = A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (total) {
+			return A2(
+				_elm_lang$core$Json_Decode$map,
+				function (attended) {
+					return (A2(
+						_elm_lang$core$Result$withDefault,
+						0,
+						_elm_lang$core$String$toFloat(attended)) / A2(
+						_elm_lang$core$Result$withDefault,
+						0,
+						_elm_lang$core$String$toFloat(total))) * 100;
+				},
+				_user$project$Commands$rsAttendanceDecoder);
+		},
+		A2(_elm_lang$core$Json_Decode$index, 7, _elm_lang$core$Json_Decode$string));
+	return A4(
+		_elm_lang$core$Json_Decode$map3,
+		_user$project$Models$Leader,
+		sessionsAttendedDecoder,
+		A2(_elm_lang$core$Json_Decode$index, 2, _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode$index, 6, _elm_lang$core$Json_Decode$string));
+}();
+var _user$project$Commands$lsLeaderDecoder = function () {
 	var sessionsAttendedDecoder = A2(
 		_elm_lang$core$Json_Decode$andThen,
 		function (total) {
@@ -15752,7 +15819,7 @@ var _user$project$Commands$leaderDecoder = function () {
 				function (attended) {
 					return (attended / total) * 100;
 				},
-				_user$project$Commands$attendanceDecoder);
+				_user$project$Commands$lsAttendanceDecoder);
 		},
 		A2(_elm_lang$core$Json_Decode$index, 7, _elm_lang$core$Json_Decode$float));
 	return A4(
@@ -15762,6 +15829,22 @@ var _user$project$Commands$leaderDecoder = function () {
 		A2(_elm_lang$core$Json_Decode$index, 2, _elm_lang$core$Json_Decode$string),
 		A2(_elm_lang$core$Json_Decode$index, 5, _elm_lang$core$Json_Decode$string));
 }();
+var _user$project$Commands$riversDecoder = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'records',
+		_1: {ctor: '[]'}
+	},
+	_elm_lang$core$Json_Decode$list(_user$project$Commands$riverDecoder));
+var _user$project$Commands$rsLeadersDecoder = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'data',
+		_1: {ctor: '[]'}
+	},
+	_elm_lang$core$Json_Decode$list(_user$project$Commands$rsLeaderDecoder));
 var _user$project$Commands$lsLeadersDecoder = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -15769,10 +15852,21 @@ var _user$project$Commands$lsLeadersDecoder = A2(
 		_0: 'data',
 		_1: {ctor: '[]'}
 	},
-	_elm_lang$core$Json_Decode$list(_user$project$Commands$leaderDecoder));
+	_elm_lang$core$Json_Decode$list(_user$project$Commands$lsLeaderDecoder));
+var _user$project$Commands$fetchRiversUrl = 'https://data.gov.in/api/datastore/resource.json?resource_id=2cfdb04a-e7e6-484b-8728-4cafbfe936e8&api-key=8064b14f9bd1e31d1e5a723a40b4fac1';
 var _user$project$Commands$fetchRSLeadersUrl = 'https://data.gov.in/node/982241/datastore/export/json';
 var _user$project$Commands$fetchLSLeadersUrl = 'https://data.gov.in/node/85987/datastore/export/json';
-var _user$project$Commands$fetchLeaders = A2(
+var _user$project$Commands$fetchRivers = A2(
+	_elm_lang$core$Platform_Cmd$map,
+	_user$project$Msgs$OnFetchRivers,
+	_krisajenkins$remotedata$RemoteData$sendRequest(
+		A2(_elm_lang$http$Http$get, _user$project$Commands$fetchRiversUrl, _user$project$Commands$riversDecoder)));
+var _user$project$Commands$fetchRSLeaders = A2(
+	_elm_lang$core$Platform_Cmd$map,
+	_user$project$Msgs$OnFetchRSLeaders,
+	_krisajenkins$remotedata$RemoteData$sendRequest(
+		A2(_elm_lang$http$Http$get, _user$project$Commands$fetchRSLeadersUrl, _user$project$Commands$rsLeadersDecoder)));
+var _user$project$Commands$fetchLSLeaders = A2(
 	_elm_lang$core$Platform_Cmd$map,
 	_user$project$Msgs$OnFetchLSLeaders,
 	_krisajenkins$remotedata$RemoteData$sendRequest(
@@ -15825,16 +15919,31 @@ var _user$project$Routing$parseLocation = function (location) {
 	}
 };
 
+var _user$project$Update$loadRouteData = function (route) {
+	var _p0 = route;
+	switch (_p0.ctor) {
+		case 'LeadersRoute':
+			return _elm_lang$core$Platform_Cmd$none;
+		case 'StateCrimesRoute':
+			return _elm_lang$core$Platform_Cmd$none;
+		case 'CityAccidentsRoutes':
+			return _elm_lang$core$Platform_Cmd$none;
+		case 'RiversRoute':
+			return _user$project$Commands$fetchRivers;
+		default:
+			return _elm_lang$core$Platform_Cmd$none;
+	}
+};
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
 			case 'OnFetchLSLeaders':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{lsLeaders: _p0._0}),
+						{lsLeaders: _p1._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'OnFetchRSLeaders':
@@ -15842,17 +15951,25 @@ var _user$project$Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{rsLeaders: _p0._0}),
+						{rsLeaders: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OnFetchRivers':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{rivers: _p1._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var newRoute = _user$project$Routing$parseLocation(_p0._0);
+				var newRoute = _user$project$Routing$parseLocation(_p1._0);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{route: newRoute}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$Update$loadRouteData(newRoute)
 				};
 		}
 	});
@@ -16001,7 +16118,287 @@ var _user$project$Views_Leaders$leaderRow = F2(
 				}
 			});
 	});
-var _user$project$Views_Leaders$list = function (leaders) {
+var _user$project$Views_Leaders$list = F2(
+	function (leaders, title) {
+		return A2(
+			_elm_lang$html$Html$table,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('table'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'height', _1: '100%'},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'display', _1: 'inline-block'},
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$thead,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('thead-inverse'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$tr,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$th,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('#'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$th,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$colspan(2),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(title),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$tbody,
+						{ctor: '[]'},
+						A2(_elm_lang$core$List$indexedMap, _user$project$Views_Leaders$leaderRow, leaders)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Views_Leaders$maybeRsList = function (response) {
+	var _p0 = response;
+	switch (_p0.ctor) {
+		case 'NotAsked':
+			return _elm_lang$html$Html$text('');
+		case 'Loading':
+			return _elm_lang$html$Html$text('Loading...');
+		case 'Success':
+			return A2(
+				_user$project$Views_Leaders$list,
+				_elm_lang$core$List$reverse(
+					A2(
+						_elm_lang$core$List$sortBy,
+						function (_) {
+							return _.attendance;
+						},
+						_p0._0)),
+				'Rajya Sabha 15 - Attendence');
+		default:
+			return _elm_lang$html$Html$text(
+				_elm_lang$core$Basics$toString(_p0._0));
+	}
+};
+var _user$project$Views_Leaders$maybeLsList = function (response) {
+	var _p1 = response;
+	switch (_p1.ctor) {
+		case 'NotAsked':
+			return _elm_lang$html$Html$text('');
+		case 'Loading':
+			return _elm_lang$html$Html$text('Loading...');
+		case 'Success':
+			return A2(
+				_user$project$Views_Leaders$list,
+				_elm_lang$core$List$reverse(
+					A2(
+						_elm_lang$core$List$sortBy,
+						function (_) {
+							return _.attendance;
+						},
+						_p1._0)),
+				'Lok Sabha 15 - Attendence');
+		default:
+			return _elm_lang$html$Html$text(
+				_elm_lang$core$Basics$toString(_p1._0));
+	}
+};
+var _user$project$Views_Leaders$nav = A2(
+	_elm_lang$html$Html$h1,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('Our Leaders'),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Views_Leaders$view = F2(
+	function (lsResponse, rsResponse) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'height', _1: '100%'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'overflow', _1: 'hidden'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'overflow-y', _1: 'auto'},
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _user$project$Views_Leaders$nav,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Views_Leaders$maybeLsList(lsResponse),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Views_Leaders$maybeRsList(rsResponse),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+
+var _user$project$Views_Accidents$view = A2(
+	_elm_lang$html$Html$div,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('Accidents'),
+		_1: {ctor: '[]'}
+	});
+
+var _user$project$Views_Crimes$view = A2(
+	_elm_lang$html$Html$div,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('Crimes'),
+		_1: {ctor: '[]'}
+	});
+
+var _user$project$Views_Rivers$isNotEmptyRecord = function (river) {
+	return _elm_lang$core$String$isEmpty(river.state) ? false : true;
+};
+var _user$project$Views_Rivers$riverRow = F2(
+	function (index, river) {
+		return A2(
+			_elm_lang$html$Html$tr,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$th,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$scope('row'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(index + 1)),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$td,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(river.state),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$td,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(river.location),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$td,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(river.maxTemp),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$td,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(river.minTemp),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$td,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(river.maxPH),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$td,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(river.minPH),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Views_Rivers$list = function (rivers) {
 	return A2(
 		_elm_lang$html$Html$table,
 		{
@@ -16012,7 +16409,7 @@ var _user$project$Views_Leaders$list = function (leaders) {
 				_0: _elm_lang$html$Html_Attributes$style(
 					{
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: 'width', _1: '50%'},
+						_0: {ctor: '_Tuple2', _0: 'width', _1: '100%'},
 						_1: {
 							ctor: '::',
 							_0: {ctor: '_Tuple2', _0: 'height', _1: '100%'},
@@ -16050,17 +16447,68 @@ var _user$project$Views_Leaders$list = function (leaders) {
 								ctor: '::',
 								_0: A2(
 									_elm_lang$html$Html$th,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$colspan(2),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('Lok Sabha 15 - Attendence'),
+										_0: _elm_lang$html$Html$text('State'),
 										_1: {ctor: '[]'}
 									}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$th,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Location'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$th,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Max Temp.'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$th,
+												{ctor: '[]'},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Min Temp.'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$th,
+													{ctor: '[]'},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('PH Value Max'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$th,
+														{ctor: '[]'},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text('PH Value Min'),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
 							}
 						}),
 					_1: {ctor: '[]'}
@@ -16070,12 +16518,12 @@ var _user$project$Views_Leaders$list = function (leaders) {
 				_0: A2(
 					_elm_lang$html$Html$tbody,
 					{ctor: '[]'},
-					A2(_elm_lang$core$List$indexedMap, _user$project$Views_Leaders$leaderRow, leaders)),
+					A2(_elm_lang$core$List$indexedMap, _user$project$Views_Rivers$riverRow, rivers)),
 				_1: {ctor: '[]'}
 			}
 		});
 };
-var _user$project$Views_Leaders$maybeList = function (response) {
+var _user$project$Views_Rivers$maybeList = function (response) {
 	var _p0 = response;
 	switch (_p0.ctor) {
 		case 'NotAsked':
@@ -16083,28 +16531,27 @@ var _user$project$Views_Leaders$maybeList = function (response) {
 		case 'Loading':
 			return _elm_lang$html$Html$text('Loading...');
 		case 'Success':
-			return _user$project$Views_Leaders$list(
-				_elm_lang$core$List$reverse(
-					A2(
-						_elm_lang$core$List$sortBy,
-						function (_) {
-							return _.attendance;
-						},
-						_p0._0)));
+			return _user$project$Views_Rivers$list(
+				A2(
+					_elm_lang$core$List$sortBy,
+					function (_) {
+						return _.state;
+					},
+					A2(_elm_lang$core$List$filter, _user$project$Views_Rivers$isNotEmptyRecord, _p0._0)));
 		default:
 			return _elm_lang$html$Html$text(
 				_elm_lang$core$Basics$toString(_p0._0));
 	}
 };
-var _user$project$Views_Leaders$nav = A2(
+var _user$project$Views_Rivers$nav = A2(
 	_elm_lang$html$Html$h1,
 	{ctor: '[]'},
 	{
 		ctor: '::',
-		_0: _elm_lang$html$Html$text('Our Leaders'),
+		_0: _elm_lang$html$Html$text('Our Rivers'),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Views_Leaders$view = function (response) {
+var _user$project$Views_Rivers$view = function (response) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{
@@ -16127,41 +16574,14 @@ var _user$project$Views_Leaders$view = function (response) {
 		},
 		{
 			ctor: '::',
-			_0: _user$project$Views_Leaders$nav,
+			_0: _user$project$Views_Rivers$nav,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Views_Leaders$maybeList(response),
+				_0: _user$project$Views_Rivers$maybeList(response),
 				_1: {ctor: '[]'}
 			}
 		});
 };
-
-var _user$project$Views_Accidents$view = A2(
-	_elm_lang$html$Html$div,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html$text('Accidents'),
-		_1: {ctor: '[]'}
-	});
-
-var _user$project$Views_Crimes$view = A2(
-	_elm_lang$html$Html$div,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html$text('Crimes'),
-		_1: {ctor: '[]'}
-	});
-
-var _user$project$Views_Rivers$view = A2(
-	_elm_lang$html$Html$div,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html$text('Rivers'),
-		_1: {ctor: '[]'}
-	});
 
 var _user$project$Views_Dashboard$notFoundView = A2(
 	_elm_lang$html$Html$div,
@@ -16175,13 +16595,13 @@ var _user$project$Views_Dashboard$page = function (model) {
 	var _p0 = model.route;
 	switch (_p0.ctor) {
 		case 'LeadersRoute':
-			return _user$project$Views_Leaders$view(model.lsLeaders);
+			return A2(_user$project$Views_Leaders$view, model.lsLeaders, model.rsLeaders);
 		case 'StateCrimesRoute':
 			return _user$project$Views_Crimes$view;
 		case 'CityAccidentsRoutes':
 			return _user$project$Views_Accidents$view;
 		case 'RiversRoute':
-			return _user$project$Views_Rivers$view;
+			return _user$project$Views_Rivers$view(model.rivers);
 		default:
 			return _user$project$Views_Dashboard$notFoundView;
 	}
@@ -16418,7 +16838,16 @@ var _user$project$Main$init = function (location) {
 	return {
 		ctor: '_Tuple2',
 		_0: _user$project$Models$initialModel(currentRoute),
-		_1: _user$project$Commands$fetchLeaders
+		_1: _elm_lang$core$Platform_Cmd$batch(
+			{
+				ctor: '::',
+				_0: _user$project$Commands$fetchLSLeaders,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Commands$fetchRSLeaders,
+					_1: {ctor: '[]'}
+				}
+			})
 	};
 };
 var _user$project$Main$main = A2(
