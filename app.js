@@ -2390,7 +2390,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "html,\nbody {\n  height: 100%; }\n\nbody {\n  background-color: #f0f0f0; }\n\nimg {\n  max-width: 100%; }\n\n.fl-left {\n  float: left; }\n\n.fl-right {\n  float: right; }\n\n.ai-center {\n  display: flex;\n  align-items: center;\n  align-content: stretch; }\n\n.ai-stretch {\n  display: flex;\n  align-items: stretch; }\n\n.ai-stretch * {\n  flex: 1 0 0%; }\n\n.space-around {\n  justify-content: space-around; }\n\n.space-center {\n  justify-content: center; }\n\nsup.floating-symbol {\n  font-size: 55%;\n  font-weight: 100; }\n\n.truncate {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  display: -webkit-box;\n  line-height: 20px;\n  max-height: 40px;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical; }\n\n.vertical-align-middle {\n  vertical-align: middle; }\n\n.inline-flex__middle {\n  display: inline-flex;\n  vertical-align: middle; }\n\n.nowrap {\n  white-space: nowrap; }\n\n.strike-it {\n  color: #979797;\n  margin: 0;\n  padding: 0;\n  text-decoration: line-through; }\n\n/****************************************\r\n*************** Show Hide ***************\r\n*****************************************/\n.display-block {\n  display: block !important; }\n\n.display-hide {\n  display: none !important; }\n\n.visibility-shown {\n  visibility: visible !important; }\n\n.visibility-hidden {\n  visibility: hidden !important; }\n\n.col-2 {\n  width: 16%;\n  height: 100%;\n  float: left; }\n\n.col-10 {\n  width: 84%;\n  float: left; }\n\nheader {\n  background-color: #fff;\n  height: 80px;\n  -webkit-box-shadow: 0 6px 3px -6px black;\n  -moz-box-shadow: 0 6px 3px -6px black;\n  box-shadow: 0 6px 3px -6px black; }\n\n.main-container {\n  padding: 20px 65px; }\n\n.side-bar {\n  width: 16%;\n  height: 100%;\n  background-color: #2d3f4d;\n  float: left; }\n\n.side-bar .site-logo {\n  display: block;\n  background-color: #233440;\n  text-align: center;\n  cursor: pointer; }\n\n.side-bar .main-nav {\n  padding: 20px 0; }\n\n.main-nav ul {\n  margin: 0;\n  padding: 0 35px; }\n\n.main-nav ul > li {\n  padding: 15px 0;\n  list-style: none; }\n\n.main-nav ul > li > a {\n  font-size: 16px;\n  font-family: Calibri, sans-serif;\n  color: #fff;\n  line-height: 20px;\n  text-decoration: none; }\n\nour-leaders {\n  clear: both; }\n\n.our-leaders__data-list-wrapper .our-leaders__data-list:nth-child(1) {\n  margin-right: 25px; }\n\n.our-leaders__data-list-wrapper .our-leaders__data-list:nth-child(2) {\n  margin-left: 25px; }\n\n.our-leaders__data-list {\n  display: inline-block;\n  width: 46%; }\n\n.data-list__wrapper {\n  height: 800px;\n  overflow-y: scroll;\n  width: 100%;\n  background: #fff;\n  padding: 10px; }\n\n.data-list__container {\n  display: block; }\n\n.data-list__title {\n  padding: 20px; }\n\nul.data-row {\n  list-style: none;\n  padding-left: 0px; }\n\n.data-row {\n  border-bottom: 2px solid #f0f0f0;\n  margin: 20px;\n  padding-bottom: 20px;\n  display: flex; }\n\n.data-row .data-column {\n  margin: 0;\n  clear: both; }\n\n.data-row .data-column:nth-child(1) {\n  width: 10%;\n  text-align: center; }\n\n.data-row .data-column:nth-child(2) {\n  width: 40%; }\n\n.data-row .data-column:nth-child(3) {\n  width: 50%; }\n\n.data-list__member-state {\n  display: block;\n  font-size: 12px;\n  font-weight: bold; }\n\n.progress-bar {\n  float: left;\n  width: 80%; }\n\n.progress-track {\n  position: relative;\n  width: 100%;\n  height: 20px;\n  background: #edf1f0; }\n\n.progress-info {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  right: 0;\n  font-size: 12px;\n  top: 2px;\n  z-index: 9; }\n\n.progress-fill {\n  position: relative;\n  background: #d6fabb;\n  height: 20px;\n  width: 0;\n  color: #000;\n  text-align: center;\n  font-size: 12px;\n  line-height: 20px; }\n", ""]);
+exports.push([module.i, "html,\nbody {\n  height: 100%; }\n\nbody {\n  background-color: #f0f0f0; }\n\nimg {\n  max-width: 100%; }\n\n.fl-left {\n  float: left; }\n\n.fl-right {\n  float: right; }\n\n.ai-center {\n  display: flex;\n  align-items: center;\n  align-content: stretch; }\n\n.ai-stretch {\n  display: flex;\n  align-items: stretch; }\n\n.ai-stretch * {\n  flex: 1 0 0%; }\n\n.space-around {\n  justify-content: space-around; }\n\n.space-center {\n  justify-content: center; }\n\nsup.floating-symbol {\n  font-size: 55%;\n  font-weight: 100; }\n\n.truncate {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  display: -webkit-box;\n  line-height: 20px;\n  max-height: 40px;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical; }\n\n.vertical-align-middle {\n  vertical-align: middle; }\n\n.inline-flex__middle {\n  display: inline-flex;\n  vertical-align: middle; }\n\n.nowrap {\n  white-space: nowrap; }\n\n.strike-it {\n  color: #979797;\n  margin: 0;\n  padding: 0;\n  text-decoration: line-through; }\n\n/****************************************\r\n*************** Show Hide ***************\r\n*****************************************/\n.display-block {\n  display: block !important; }\n\n.display-hide {\n  display: none !important; }\n\n.visibility-shown {\n  visibility: visible !important; }\n\n.visibility-hidden {\n  visibility: hidden !important; }\n\n.col-2 {\n  width: 16%;\n  height: 100%;\n  float: left; }\n\n.col-10 {\n  width: 84%;\n  float: left; }\n\nheader {\n  background-color: #fff;\n  height: 80px;\n  -webkit-box-shadow: 0 6px 3px -6px black;\n  -moz-box-shadow: 0 6px 3px -6px black;\n  box-shadow: 0 6px 3px -6px black; }\n\n.main-container {\n  padding: 20px 65px; }\n\n.side-bar {\n  width: 16%;\n  height: 100%;\n  background-color: #2d3f4d;\n  float: left; }\n\n.side-bar .site-logo {\n  display: block;\n  background-color: #233440;\n  text-align: center;\n  cursor: pointer; }\n\n.side-bar .main-nav {\n  padding: 20px 0; }\n\n.main-nav ul {\n  margin: 0;\n  padding: 0 35px; }\n\n.main-nav ul > li {\n  padding: 15px 0;\n  list-style: none; }\n\n.main-nav ul > li > a {\n  font-size: 16px;\n  font-family: Calibri, sans-serif;\n  color: #fff;\n  line-height: 20px;\n  text-decoration: none; }\n\nour-leaders {\n  clear: both; }\n\n.our-leaders__data-list-wrapper .our-leaders__data-list:nth-child(1) {\n  margin-right: 25px; }\n\n.our-leaders__data-list-wrapper .our-leaders__data-list:nth-child(2) {\n  margin-left: 25px; }\n\n.our-leaders__data-list {\n  display: inline-block;\n  width: 46%; }\n\n.data-list__wrapper {\n  height: 800px;\n  overflow-y: scroll;\n  width: 100%;\n  background: #fff;\n  padding: 10px; }\n\n.data-list__container {\n  display: block; }\n\n.data-list__title {\n  padding: 20px; }\n\nul.data-row {\n  list-style: none;\n  padding-left: 0px; }\n\n.data-row {\n  border-bottom: 2px solid #f0f0f0;\n  margin: 20px;\n  padding-bottom: 20px;\n  display: flex; }\n\n.data-row .data-column {\n  margin: 0;\n  clear: both; }\n\n.data-row .data-column:nth-child(1) {\n  width: 10%;\n  text-align: center; }\n\n.data-row .data-column:nth-child(2) {\n  width: 40%; }\n\n.data-row .data-column:nth-child(3) {\n  width: 50%; }\n\n.data-list__member-state {\n  display: block;\n  font-size: 12px;\n  font-weight: bold; }\n\n.progress-bar {\n  float: left;\n  width: 80%; }\n\n.progress-track {\n  position: relative;\n  width: 100%;\n  height: 20px;\n  background: #edf1f0; }\n\n.progress-info {\n  position: absolute;\n  text-align: center;\n  width: 100%;\n  left: 0;\n  right: 0;\n  font-size: 12px;\n  top: 2px;\n  z-index: 9; }\n\n.progress-fill {\n  position: relative;\n  background: #d6fabb;\n  height: 20px;\n  width: 0;\n  color: #000;\n  text-align: center;\n  font-size: 12px;\n  line-height: 20px; }\n\ntable.rivers {\n  background-color: #fff;\n  padding: 5px; }\n\ntable.rivers td {\n  border: thin solid #eaeaea;\n  padding: 3px 5px; }\n", ""]);
 
 // exports
 
@@ -13104,16 +13104,11 @@ var _user$project$Views_Rivers$riverRow = F2(
 			{
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$th,
+					_elm_lang$html$Html$td,
+					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$scope('row'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$Basics$toString(index + 1)),
+						_0: _elm_lang$html$Html$text(river.state),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -13123,7 +13118,7 @@ var _user$project$Views_Rivers$riverRow = F2(
 						{ctor: '[]'},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(river.state),
+							_0: _elm_lang$html$Html$text(river.location),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
@@ -13133,7 +13128,7 @@ var _user$project$Views_Rivers$riverRow = F2(
 							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(river.location),
+								_0: _elm_lang$html$Html$text(river.maxTemp),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -13143,7 +13138,7 @@ var _user$project$Views_Rivers$riverRow = F2(
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(river.maxTemp),
+									_0: _elm_lang$html$Html$text(river.minTemp),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -13153,7 +13148,7 @@ var _user$project$Views_Rivers$riverRow = F2(
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text(river.minTemp),
+										_0: _elm_lang$html$Html$text(river.maxPH),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -13163,21 +13158,10 @@ var _user$project$Views_Rivers$riverRow = F2(
 										{ctor: '[]'},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text(river.maxPH),
+											_0: _elm_lang$html$Html$text(river.minPH),
 											_1: {ctor: '[]'}
 										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$td,
-											{ctor: '[]'},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text(river.minPH),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -13190,7 +13174,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 		_elm_lang$html$Html$table,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('table'),
+			_0: _elm_lang$html$Html_Attributes$class('rivers'),
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$html$Html_Attributes$style(
@@ -13227,7 +13211,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('#'),
+									_0: _elm_lang$html$Html$text('State'),
 									_1: {ctor: '[]'}
 								}),
 							_1: {
@@ -13237,7 +13221,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('State'),
+										_0: _elm_lang$html$Html$text('Location'),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -13247,7 +13231,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 										{ctor: '[]'},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Location'),
+											_0: _elm_lang$html$Html$text('Max Temp.'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
@@ -13257,7 +13241,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Max Temp.'),
+												_0: _elm_lang$html$Html$text('Min Temp.'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
@@ -13267,7 +13251,7 @@ var _user$project$Views_Rivers$list = function (rivers) {
 												{ctor: '[]'},
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html$text('Min Temp.'),
+													_0: _elm_lang$html$Html$text('PH Value Max'),
 													_1: {ctor: '[]'}
 												}),
 											_1: {
@@ -13277,21 +13261,10 @@ var _user$project$Views_Rivers$list = function (rivers) {
 													{ctor: '[]'},
 													{
 														ctor: '::',
-														_0: _elm_lang$html$Html$text('PH Value Max'),
+														_0: _elm_lang$html$Html$text('PH Value Min'),
 														_1: {ctor: '[]'}
 													}),
-												_1: {
-													ctor: '::',
-													_0: A2(
-														_elm_lang$html$Html$th,
-														{ctor: '[]'},
-														{
-															ctor: '::',
-															_0: _elm_lang$html$Html$text('PH Value Min'),
-															_1: {ctor: '[]'}
-														}),
-													_1: {ctor: '[]'}
-												}
+												_1: {ctor: '[]'}
 											}
 										}
 									}
