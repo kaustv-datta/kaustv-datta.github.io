@@ -41669,7 +41669,7 @@ var _user$project$Views_Leaders$view = F2(
 	});
 
 var _user$project$Views_Accidents$barChart = A2(
-	_elm_lang$html$Html$div,
+	_elm_lang$html$Html$section,
 	{
 		ctor: '::',
 		_0: _elm_lang$html$Html_Attributes$class('bar-chart__wrapper'),
@@ -41751,7 +41751,7 @@ var _user$project$Views_Accidents$view = A2(
 	});
 
 var _user$project$Views_Crimes$barChart = A2(
-	_elm_lang$html$Html$div,
+	_elm_lang$html$Html$section,
 	{
 		ctor: '::',
 		_0: _elm_lang$html$Html_Attributes$class('bar-chart__wrapper'),
