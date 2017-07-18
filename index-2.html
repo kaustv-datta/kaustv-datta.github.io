@@ -5,11 +5,13 @@
     <title>360 deg Image</title>
     <meta name="description" content="360&deg; Image - A-Frame">
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
+    <script>THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'</script>
   </head>
-  <body>
-    <a-scene>
-      <a-sky src="https://cdn.glitch.com/521680e4-99b8-4600-9f93-012023f24ff2%2FScreen%20Shot%202017-07-11%20at%206.55.11%20PM.png?1499779548076" radius="10000">
-      </a-sky>
+  <body style='margin : 0px; overflow: hidden;'>
+    <a-scene embedded artoolkit='sourceType: webcam;'>
+      <a-box position='0 0 0.5' material='opacity: 0.5;'></a-box>
+      <a-marker-camera preset='hiro'></a-marker-camera>
     </a-scene>
   </body>
 </html>
