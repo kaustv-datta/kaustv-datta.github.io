@@ -332,7 +332,8 @@ window.addEventListener('load', function() {
                 case 'ar_button_six':
                 case 'ar_button_seven':
                   var request = new XMLHttpRequest();
-                  request.open('GET', 'http://maker.ifttt.com/trigger/'+e.detail.projection_id+'/with/key/yourkeyhere', true);
+                  // request.open('GET', 'https://maker.ifttt.com/trigger/'+e.detail.projection_id+'/with/key/A9htfxyQSktnJYRpCxVXb', true);
+                  request.open('GET', 'https://maker.ifttt.com/trigger/light_click/with/key/A9htfxyQSktnJYRpCxVXb', true);                  
 
                   request.onload = function() {
                     if (request.status >= 200 && request.status < 400) {
